@@ -16,10 +16,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
-/**
- * Gestiona la conexion JDBC con SQLite y la creacion de la tabla.
- * Cada operacion abre su propia conexion y la cierra con try-with-resources.
- */
 public class ConexionBD {
 
     private static final String PROP_RUTA = "productos.db";
@@ -30,12 +26,10 @@ public class ConexionBD {
     private final Path rutaArchivo;
     private final String url;
 
-    /** BD en la ruta por defecto (junto al JAR, o en ./data al ejecutar desde el IDE). */
     public ConexionBD() {
         this(resolverRutaPorDefecto());
     }
 
-    /** BD en una ruta concreta (util para pruebas). */
     public ConexionBD(Path rutaArchivo) {
         this.rutaArchivo = rutaArchivo.toAbsolutePath();
         this.url = "jdbc:sqlite:" + this.rutaArchivo;
@@ -55,7 +49,6 @@ public class ConexionBD {
         }
     }
 
-    /** Crea la carpeta y la tabla si no existen. Es seguro llamarlo en cada arranque. */
     public void inicializar() {
         try {
             Files.createDirectories(rutaArchivo.getParent());
